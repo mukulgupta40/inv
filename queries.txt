@@ -1,0 +1,43 @@
+create table invoice(
+ invoice_no int,
+ Dates date,
+ cgst float,
+ sgst float,
+ igst float,
+ total_gst float,
+ vechile_no varchar2(255),
+ driver_name varchar2(255),
+ net_amount float,
+  Primary key(invoice_no) );
+
+alter table invoice
+  add client_id int;
+
+alter table invoice
+  add foreign key(client_id) references clients(client_id);
+ 
+create table items_for_invoice(
+   invoice_no int,
+   item_id int,
+   units int,
+   price float,
+   amount int,
+   gst_amount int,
+   foreign key(invoice_no) references invoice(invoice_no),
+   foreign key(item_id) references items(item_id),
+   primary key(invoice_no,item_id) );
+
+alter table invoice
+ add customer_id int;
+
+alter table invoice
+ add foreign key(customer_id) references customer(customer_id);
+
+create table stock(
+   client_id int,
+   item_id int,
+   units int,
+   price float,
+   foreign key(client_id) references clients(client_id),
+   foreign key(item_id) references items(item_id),
+   primary key(client_id,item_id) );
